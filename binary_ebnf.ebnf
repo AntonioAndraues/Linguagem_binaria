@@ -1,0 +1,19 @@
+BLOCK ::= '{' COMMAND '}'
+COMMAND  ::= ( ( Iden '=' | 'return' ) RELEXPR | ( 'return' | 'echo' RELEXPR ) ';' | nome '(' ( RELEXPR ( ',' RELEXPR )* )? ')' )? ';'
+           | ( 'function' nome '(' ( Iden ( ',' Iden )* )? ')' )? BLOCK
+           | ( 'while' '(' RELEXPR ')' | 'if' '(' RELEXPR ')' ( COMMAND 'else' )? ) COMMAND
+ 
+Iden ::= '$'[a-zA-Z]
+
+RELEXPR::=EXPRESSION ( ( '==' | '<' | '>' ) EXPRESSION )*
+EXPRESSION::=TERM ( ( '+' | '-' | '|' ) TERM )*
+TERM::=FACTOR ( ( '*' | '/' | '&&' ) FACTOR )*
+
+FACTOR   ::= ( '!' | '+' | '-' )* (( '(' RELEXPR | 'readline' '(' | nome '(' ( RELEXPR ( ',' RELEXPR )* )? ) ')' | Iden )? ';' | Number | bolean | string
+ASSIGNMENT ::= Iden '=' EXPRESSION ';'
+nome ::= '@'[a-zA-Z]'@'
+string ::= ' string_ '
+bolean   ::= 'true'
+           | 'false'
+
+
